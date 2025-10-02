@@ -1,25 +1,5 @@
-# cli
+# Bunup CLI
 
-A typescript library
+Tools to create, initialize, and evolve Typescript/React libraries built with [Bunup](https://bunup.dev).
 
-## Installation
-
-```bash
-bun add cli
-```
-
-## Usage
-
-```typescript
-import { greet } from 'cli';
-
-console.log(greet('World')); // Hello, World!
-```
-
-## Contributing
-
-Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
-
-## License
-
-MIT
+🚧 WORK IN PROGRESS!
