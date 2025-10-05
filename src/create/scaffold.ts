@@ -6,7 +6,10 @@ import pc from 'picocolors'
 import { replaceInFile } from 'replace-in-file'
 import { templateConfig } from './constants'
 import type { ProjectConfig } from './prompts'
-import { extractPackageName, renameTemplateVariables } from './utils'
+import {
+	extractPackageName,
+	replaceTemplateVariablesInFilenames,
+} from './utils'
 
 function getTemplateDirectory(config: ProjectConfig): string {
 	if (config.libraryType === 'react') {
@@ -63,7 +66,7 @@ export async function scaffoldProject(config: ProjectConfig): Promise<void> {
 			ignore: ['node_modules', 'dist', 'bun.lock', '.git'],
 		})
 
-		await renameTemplateVariables(projectPath, variables)
+		await replaceTemplateVariablesInFilenames(projectPath, variables)
 
 		s.message('Installing dependencies...')
 		await $`cd ${projectPath} && bun install`.quiet()

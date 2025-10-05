@@ -9,7 +9,7 @@ export function extractPackageName(name: string): string {
 	return name.includes('/') ? (name.split('/').pop() as string) : name
 }
 
-export async function renameTemplateVariables(
+export async function replaceTemplateVariablesInFilenames(
 	projectPath: string,
 	variables: Record<string, string>,
 ): Promise<void> {
