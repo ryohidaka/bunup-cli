@@ -6,7 +6,7 @@ export function getRandomItem<T>(array: T[]): T {
 }
 
 export function extractPackageName(name: string): string {
-	return name.includes('/') ? name.split('/').pop()! : name
+	return name.includes('/') ? (name.split('/').pop() as string) : name
 }
 
 export async function renameTemplateVariables(
