@@ -22,7 +22,7 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 			{
 				value: 'minimal',
 				label: 'Minimal',
-				hint: 'Basic starter with bunup config, perfect for building your own setup',
+				hint: 'Basic starter, perfect for building your own setup',
 			},
 			{
 				value: 'full',
