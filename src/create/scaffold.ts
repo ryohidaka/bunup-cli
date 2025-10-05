@@ -21,13 +21,13 @@ function getTemplateDirectory(config: ProjectConfig): string {
 
 function prepareVariables(config: ProjectConfig): Record<string, string> {
 	return {
-		project_name: config.projectName,
+		project_name: config.isMonorepo
+			? `${config.projectName}-monorepo`
+			: config.projectName,
 		project_description: config.description,
 		repo_name: config.repoName,
 		username: config.username,
-		first_package_name: config.isMonorepo
-			? `${config.projectName}-monorepo`
-			: config.projectName,
+		first_package_name: config.firstPackageName || config.projectName,
 	}
 }
 
@@ -46,6 +46,9 @@ export async function scaffoldProject(config: ProjectConfig): Promise<void> {
 		s.message('Applying template variables...')
 
 		const variables = prepareVariables(config)
+
+		console.log(variables)
+
 		const replacements = Object.entries(variables).map(([key, value]) => ({
 			from: new RegExp(`\\[${key}\\]`, 'g'),
 			to: value,

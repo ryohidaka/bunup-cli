@@ -9,6 +9,7 @@ export interface ProjectConfig {
 	stylingOption: 'pure-css' | 'css-modules' | 'tailwindcss' | null
 	isMonorepo: boolean
 	projectName: string
+	firstPackageName: string | null
 	description: string
 	username: string
 	repoName: string
@@ -18,8 +19,16 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 	const complexity = await p.select({
 		message: 'Select template complexity',
 		options: [
-			{ value: 'minimal', label: 'Minimal', hint: 'Essential setup only' },
-			{ value: 'full', label: 'Full', hint: 'Complete setup with examples' },
+			{
+				value: 'minimal',
+				label: 'Minimal',
+				hint: 'Basic starter with bunup config, perfect for building your own setup',
+			},
+			{
+				value: 'full',
+				label: 'Full',
+				hint: 'Publish-ready with everything you need for a modern library',
+			},
 		],
 	})
 
@@ -34,12 +43,10 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 			{
 				value: 'react',
 				label: 'React Component Library',
-				hint: 'React components with bundling',
 			},
 			{
 				value: 'typescript',
 				label: 'TypeScript Library',
-				hint: 'General purpose TypeScript library',
 			},
 		],
 	})
@@ -65,7 +72,7 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 				{
 					value: 'tailwindcss',
 					label: 'Tailwind CSS',
-					hint: 'Utility-first CSS framework',
+					hint: 'Utility-first',
 				},
 			],
 		})
@@ -121,6 +128,28 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 		process.exit(0)
 	}
 
+	let firstPackageName = null
+	if (isMonorepo) {
+		const packageName = await p.text({
+			message: 'First package name',
+			placeholder: 'core',
+			defaultValue: 'core',
+			validate(value) {
+				if (!value) return 'Package name is required'
+				if (!/^[a-z0-9-]+$/.test(value)) {
+					return 'Package name must contain only lowercase letters, numbers, and hyphens'
+				}
+			},
+		})
+
+		if (p.isCancel(packageName)) {
+			p.cancel('Operation cancelled')
+			process.exit(0)
+		}
+
+		firstPackageName = packageName as string
+	}
+
 	const defaultDescription = getRandomItem(randomDescriptions)
 	const description = await p.text({
 		message: 'Description',
@@ -157,6 +186,7 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 		stylingOption: stylingOption,
 		isMonorepo,
 		projectName: projectName,
+		firstPackageName,
 		description: description,
 		username,
 		repoName,

@@ -2,14 +2,19 @@
 
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
+import { cli } from 'zlye'
+import { version } from '../package.json'
 import { collectUserInputs, displayOutro } from './prompts'
 import { scaffoldProject } from './scaffold'
 
-async function main() {
-	console.clear()
+const program = cli()
+	.name('@bunup/cli')
+	.description('Official CLI for Bunup')
+	.version(version)
 
+program.command('create').action(async () => {
 	p.intro(
-		`${pc.bgCyan(pc.black(' bunup '))} ${pc.cyan('Library Scaffolding CLI')}`,
+		`${pc.bgCyan(pc.black(' bunup '))} ${pc.cyan(' Scaffold a new project with Bunup ')}`,
 	)
 
 	const config = await collectUserInputs()
@@ -21,6 +26,10 @@ async function main() {
 		config.stylingOption,
 		config.isMonorepo,
 	)
+})
+
+async function main() {
+	program.parse()
 }
 
 main().catch((error) => {
