@@ -41,12 +41,12 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 		message: 'What type of library do you want to create?',
 		options: [
 			{
-				value: 'react',
-				label: 'React Component Library',
-			},
-			{
 				value: 'typescript',
 				label: 'TypeScript Library',
+			},
+			{
+				value: 'react',
+				label: 'React Component Library',
 			},
 		],
 	})
