@@ -13,12 +13,12 @@ import {
 
 function getTemplateDirectory(config: ProjectConfig): string {
 	if (config.libraryType === 'react') {
-		return templateConfig[config.complexity].react[
+		return templateConfig[config.variant].react[
 			config.stylingOption as keyof typeof templateConfig.minimal.react
 		]
 	}
 
-	const tsConfig = templateConfig[config.complexity].typescript
+	const tsConfig = templateConfig[config.variant].typescript
 	return config.isMonorepo ? tsConfig.monorepo : tsConfig.single
 }
 

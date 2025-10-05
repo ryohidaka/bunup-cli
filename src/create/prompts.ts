@@ -4,7 +4,7 @@ import { randomDescriptions, randomProjectNames } from './constants'
 import { getRandomItem } from './utils'
 
 export interface ProjectConfig {
-	complexity: 'minimal' | 'full'
+	variant: 'minimal' | 'full'
 	libraryType: 'react' | 'typescript'
 	stylingOption: 'pure-css' | 'css-modules' | 'tailwindcss' | null
 	isMonorepo: boolean
@@ -16,8 +16,8 @@ export interface ProjectConfig {
 }
 
 export async function collectUserInputs(): Promise<ProjectConfig> {
-	const complexity = await p.select({
-		message: 'Select template complexity',
+	const variant = await p.select({
+		message: 'Select template variant',
 		options: [
 			{
 				value: 'minimal',
@@ -32,7 +32,7 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 		],
 	})
 
-	if (p.isCancel(complexity)) {
+	if (p.isCancel(variant)) {
 		p.cancel('Operation cancelled')
 		process.exit(0)
 	}
@@ -178,7 +178,7 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 	const [username, repoName] = (githubInfo as string).split('/')
 
 	return {
-		complexity: complexity,
+		variant: variant,
 		libraryType: libraryType,
 		stylingOption: stylingOption,
 		isMonorepo,
