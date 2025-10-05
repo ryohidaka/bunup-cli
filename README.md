@@ -2,4 +2,4 @@
 
 Tools to create, initialize, and evolve Typescript/React libraries built with [Bunup](https://bunup.dev).
 
-🚧 WORK IN PROGRESS!
+Learn more: https://bunup.dev
