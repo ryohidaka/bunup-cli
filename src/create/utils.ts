@@ -5,6 +5,10 @@ export function getRandomItem<T>(array: T[]): T {
 	return array[Math.floor(Math.random() * array.length)]
 }
 
+export function extractPackageName(name: string): string {
+	return name.includes('/') ? name.split('/').pop()! : name
+}
+
 export async function renameTemplateVariables(
 	projectPath: string,
 	variables: Record<string, string>,

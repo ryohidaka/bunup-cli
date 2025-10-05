@@ -1,5 +1,5 @@
 {
-	"name": "@bunup/cli",
+	"name": "@[bunup/cli",
 	"description": "Tools to create, initialize, and evolve Typescript/React libraries built with Bunup",
 	"version": "0.0.13",
 	"type": "module",

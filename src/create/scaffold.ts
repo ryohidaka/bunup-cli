@@ -6,7 +6,7 @@ import pc from 'picocolors'
 import { replaceInFile } from 'replace-in-file'
 import { templateConfig } from './constants'
 import type { ProjectConfig } from './prompts'
-import { renameTemplateVariables } from './utils'
+import { extractPackageName, renameTemplateVariables } from './utils'
 
 function getTemplateDirectory(config: ProjectConfig): string {
 	if (config.libraryType === 'react') {
@@ -20,6 +20,7 @@ function getTemplateDirectory(config: ProjectConfig): string {
 }
 
 function prepareVariables(config: ProjectConfig): Record<string, string> {
+	const firstPackageName = config.firstPackageName || config.projectName
 	return {
 		project_name: config.isMonorepo
 			? `${config.projectName}-monorepo`
@@ -27,13 +28,16 @@ function prepareVariables(config: ProjectConfig): Record<string, string> {
 		project_description: config.description,
 		repo_name: config.repoName,
 		username: config.username,
-		first_package_name: config.firstPackageName || config.projectName,
+		first_package_name: extractPackageName(firstPackageName),
 	}
 }
 
 export async function scaffoldProject(config: ProjectConfig): Promise<void> {
 	const templateDir = getTemplateDirectory(config)
-	const projectPath = path.join(process.cwd(), config.projectName)
+	const projectPath = path.join(
+		process.cwd(),
+		extractPackageName(config.projectName),
+	)
 	const s = p.spinner()
 
 	s.start(`Creating ${config.projectName}...`)
@@ -46,8 +50,6 @@ export async function scaffoldProject(config: ProjectConfig): Promise<void> {
 		s.message('Applying template variables...')
 
 		const variables = prepareVariables(config)
-
-		console.log(variables)
 
 		const replacements = Object.entries(variables).map(([key, value]) => ({
 			from: new RegExp(`\\[${key}\\]`, 'g'),

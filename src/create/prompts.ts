@@ -106,8 +106,12 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 		defaultValue: defaultName,
 		validate(value) {
 			if (!value) return 'Name is required'
-			if (!/^[a-z0-9-]+$/.test(value)) {
-				return 'Name must contain only lowercase letters, numbers, and hyphens'
+			if (
+				!/^(?:(?:@(?:[a-z0-9-*~][a-z0-9-*._~]*)?\/[a-z0-9-._~])|[a-z0-9-~])[a-z0-9-._~]*$/.test(
+					value,
+				)
+			) {
+				return 'Invalid package name format'
 			}
 		},
 	})
@@ -125,8 +129,12 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 			defaultValue: 'core',
 			validate(value) {
 				if (!value) return 'Package name is required'
-				if (!/^[a-z0-9-]+$/.test(value)) {
-					return 'Package name must contain only lowercase letters, numbers, and hyphens'
+				if (
+					!/^(?:(?:@(?:[a-z0-9-*~][a-z0-9-*._~]*)?\/[a-z0-9-._~])|[a-z0-9-~])[a-z0-9-._~]*$/.test(
+						value,
+					)
+				) {
+					return 'Invalid package name format'
 				}
 			},
 		})
