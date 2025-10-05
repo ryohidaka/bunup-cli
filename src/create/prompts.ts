@@ -84,20 +84,9 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 	}
 
 	if (libraryType === 'typescript') {
-		const monorepoChoice = await p.select({
+		const monorepoChoice = await p.confirm({
 			message: 'Do you want to create a monorepo?',
-			options: [
-				{
-					value: false,
-					label: 'Single Package',
-					hint: 'Standard library structure',
-				},
-				{
-					value: true,
-					label: 'Monorepo',
-					hint: 'Multiple packages in one repository',
-				},
-			],
+			initialValue: false,
 		})
 
 		if (p.isCancel(monorepoChoice)) {

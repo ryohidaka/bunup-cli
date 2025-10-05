@@ -4,8 +4,8 @@ import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import { cli } from 'zlye'
 import { version } from '../package.json'
-import { collectUserInputs, displayOutro } from './prompts'
-import { scaffoldProject } from './scaffold'
+import { collectUserInputs, displayOutro } from './create/prompts'
+import { scaffoldProject } from './create/scaffold'
 
 const program = cli()
 	.name('@bunup/cli')
