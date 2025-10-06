@@ -9,6 +9,7 @@ import type { ProjectConfig } from './prompts'
 import {
 	extractPackageName,
 	replaceTemplateVariablesInFilenames,
+	stripNonAlphabeticCharacters,
 } from './utils'
 
 function getTemplateDirectory(config: ProjectConfig): string {
@@ -23,15 +24,21 @@ function getTemplateDirectory(config: ProjectConfig): string {
 }
 
 function prepareVariables(config: ProjectConfig): Record<string, string> {
-	const firstPackageName = config.firstPackageName || config.projectName
+	const firstPackageNameFull = config.firstPackageName || config.projectName
+	const projectName = config.isMonorepo
+		? `${config.projectName}-monorepo`
+		: config.projectName
+	const firstPackageName = extractPackageName(firstPackageNameFull)
+
 	return {
-		project_name: config.isMonorepo
-			? `${config.projectName}-monorepo`
-			: config.projectName,
+		project_name: projectName,
 		project_description: config.description,
 		repo_name: config.repoName,
 		username: config.username,
-		first_package_name: extractPackageName(firstPackageName),
+		first_package_name: firstPackageName,
+		package_name_letters_only: firstPackageName
+			? stripNonAlphabeticCharacters(firstPackageName)
+			: stripNonAlphabeticCharacters(projectName),
 	}
 }
 

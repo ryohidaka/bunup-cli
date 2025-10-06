@@ -9,6 +9,10 @@ export function extractPackageName(name: string): string {
 	return name.includes('/') ? (name.split('/').pop() as string) : name
 }
 
+export function stripNonAlphabeticCharacters(str: string): string {
+	return str.replace(/[^a-zA-Z]/g, '')
+}
+
 export async function replaceTemplateVariablesInFilenames(
 	projectPath: string,
 	variables: Record<string, string>,
