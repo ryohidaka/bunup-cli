@@ -13,6 +13,7 @@ const program = cli()
 	.version(version)
 
 program.command('create').action(async () => {
+	console.log('')
 	p.intro(
 		`${pc.bgCyan(pc.black(' bunup '))} ${pc.cyan(' Scaffold a new project with Bunup ')}`,
 	)
