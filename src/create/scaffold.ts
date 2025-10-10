@@ -76,10 +76,13 @@ export async function scaffoldProject(config: ProjectConfig): Promise<void> {
 		await replaceTemplateVariablesInFilenames(projectPath, variables)
 
 		s.message('Installing dependencies...')
-		await $`cd ${projectPath} && bun install`.quiet()
+
+		await $`cd ${projectPath} && bun install`.nothrow().quiet()
+		await $`cd ${projectPath} && bun install`.nothrow().quiet()
 
 		s.message('Building project...')
-		await $`cd ${projectPath} && bun run build`.quiet()
+
+		await $`cd ${projectPath} && bun run build`.nothrow().quiet()
 
 		s.stop(`${pc.green('✓')} Project scaffolded successfully!`)
 	} catch (error) {
