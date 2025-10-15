@@ -67,7 +67,7 @@ export async function scaffoldProject(config: ProjectConfig): Promise<void> {
 		}))
 
 		await replaceInFile({
-			files: path.join(projectPath, '**/*'),
+			files: `${projectPath}/**/*`,
 			from: replacements.map((r) => r.from),
 			to: replacements.map((r) => r.to),
 			ignore: ['node_modules', 'dist', 'bun.lock', '.git'],
