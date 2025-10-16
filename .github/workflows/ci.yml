@@ -30,7 +30,7 @@ jobs:
                     run: bun install --frozen-lockfile
 
                   - name: Run validation
-                    run: bun run tsc && bun run lint
+                    run: bun run type-check && bun run lint
 
                   - name: Run tests
                     run: bun run test
