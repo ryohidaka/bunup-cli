@@ -148,8 +148,11 @@ export async function collectUserInputs(): Promise<ProjectConfig> {
 	}
 
 	const defaultDescription = getRandomItem(randomDescriptions)
+	const descriptionLabel = isMonorepo
+		? 'First package description'
+		: 'Package description'
 	const description = await p.text({
-		message: 'Description',
+		message: descriptionLabel,
 		placeholder: defaultDescription,
 		defaultValue: defaultDescription,
 	})

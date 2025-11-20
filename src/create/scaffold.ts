@@ -25,9 +25,7 @@ function getTemplateDirectory(config: ProjectConfig): string {
 
 function prepareVariables(config: ProjectConfig): Record<string, string> {
 	const firstPackageNameFull = config.firstPackageName || config.projectName
-	const projectName = config.isMonorepo
-		? `${config.projectName}-monorepo`
-		: config.projectName
+	const projectName = config.projectName
 	const firstPackageName = extractPackageName(firstPackageNameFull)
 
 	return {
