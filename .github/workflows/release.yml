@@ -52,4 +52,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to npm
-        run: npm install -g npm@latest && bun publish --access public
+        run: npm install -g npm@latest && npm publish --access public
